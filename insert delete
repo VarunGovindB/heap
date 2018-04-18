@@ -1,68 +1,70 @@
 #include<iostream>
 using namespace std;
-int heap[100],i=0;
-void insert(int data)
-{
-	heap[i]=data;
-	if(i)
-	{
-		int j=i;
+int heap[200],i=0;
+void ins(int a)
+{   
+    heap[i]=a;
+    if(i)
+	{   
+	    int j=i;
 		while(j&&heap[(j-1)/2]<heap[j])
 		{
-			int k=heap[j];
+			int temp=heap[j];
 			heap[j]=heap[(j-1)/2];
-			heap[(j-1)/2]=k;
-			j=(j-1)/2;
+			heap[(j-1)/2]=temp;
+			j=(j-1)/2;	
 		}
 	}
 	i++;
 }
-void print()
+
+void pri()
 {
 	cout<<endl;	
-	for(int k=0;k<i;k++) cout<<heap[k]<<" ";
+	for(int k=0;k<i;k++) 
+	cout<<heap[k]<<" ";
 }
-void remove()
+
+void rem()
 {
-	if(i)
+	heap[0]=heap[i-1];
+	int a;
+	a=0;
+	int maxi;
+	if(heap[2*a+1]>heap[2*a+2])
+	maxi=2*a+1;
+	else
+	maxi=2*a+2;
+	while(heap[a]<heap[maxi]&&i>=maxi)
 	{
-		heap[0]=heap[i-1];
-		int j=0,flag=1;
-		while(flag)
-		{
-			if(2*j+1>i) flag=0;
-			else 
-			{
-				int max=2*j+2;
-				if(max>i) max--;
-				else if (heap[max]<heap[max-1]) max--;
-				if(heap[max]>heap[j])
-				{
-					int k=heap[j];
-					heap[j]=heap[max];
-					heap[max]=k;
-					j=max;
-				}
-				else flag=0;
-			}
-		}
-		i--;
+		int temp=heap[a];
+		heap[a]=heap[maxi];
+		heap[maxi]=temp;
+		a=maxi;
+		if(heap[2*a+1]>heap[2*a+2])
+	    maxi=2*a+1;
+	    else
+	    maxi=2*a+2;
 	}
-	else cout<<"No heap!";
+	i--;
 }
+
 int main()
 {
-	insert(12);
-	insert(10);
-	insert(16);
-	insert(24);
-	insert(20);
-	insert(11);
-	insert(21);
-	insert(6);
-	print();
-	remove();
-	print();
-	remove();
-	print();
+	ins(15);
+	ins(10);
+	ins(16);
+	ins(24);
+	ins(20);
+	ins(12);
+	ins(21);
+	ins(6);
+	pri();
+	rem();
+	pri();
+	rem();
+	pri();
+	ins(35);
+	pri();
+	return 0;
 }
